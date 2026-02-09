@@ -1,30 +1,31 @@
-import Image from 'next/image';
-// import Header from '../components/header';
+// import Image from 'next/image';
 import { fetchTMDB } from '../lib/tmdb';
 import { Movie } from '@/types/tmdb';
+import { Card } from '@/components/card';
 
 export default async function Home() {
-  const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
-
   const data = await fetchTMDB<Movie>('/movie/top_rated');
   console.log(data);
 
   return (
     <>
-      <div>
+      <main className="main">
         {data.results.map((movie) => (
-          <div key={movie.id}>
-            <Image
-              src={`${IMAGE_BASE_URL}${movie.poster_path}`}
-              alt={movie.original_title}
-              width={500}
-              height={500}
-            ></Image>
-            <h2>{movie.title}</h2>
-            <p>{movie.vote_average}</p>
-          </div>
+          <Card key={movie.id} {...movie} />
         ))}
-      </div>
+      </main>
     </>
   );
 }
+
+/*
+      Detta vi ska ha med
+
+      backdrop_path: '/6aNKD81RHR1DqUUa8kOZ1TBY1Lp.jpg',
+      id: 637,
+      overview: 'A touching story of an Italian book seller of Jewish ancestry who lives in his own little fairy tale. His creative and happy life would come to an abrupt halt when his entire family is deported to a concentration camp during World War II. 
+        While locked up he tries to convince his son that the whole thing is just a game.',
+      poster_path: '/mfnkSeeVOBVheuyn2lo4tfmOPQb.jpg',
+      release_date: '1997-12-20',
+      title: 'Life Is Beautiful',
+*/
