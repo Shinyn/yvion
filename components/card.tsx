@@ -11,13 +11,13 @@ export function Card(movie: Movie) {
       <section>
         <div key={movie.id}>
           <Image
-            className="image"
+            className="movie-image"
             src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
             alt={movie.title}
             width={500}
             height={250}
           ></Image>
-          <h1>{movie.title}</h1>
+          {/* <h1 className="movie-title">{movie.title}</h1> */}
         </div>
       </section>
     </>

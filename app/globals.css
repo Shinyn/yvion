@@ -36,10 +36,37 @@ body {
   /* background-color: red; */
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
-.image {
-  border: 1px rgb(183, 255, 183) solid;
+.movie-image {
+  border: 1px rgb(255, 255, 255) solid;
   border-radius: 1rem;
+
+  &:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  background-color: #1f1f1f;
+  border: 1px solid white;
+  border-radius: 5px;
+  width: clamp(50%, 50vw, 30rem);
+  align-self: center;
+  margin: 1rem;
+  padding-inline: 0.5rem;
+  padding-block: 0.2rem;
+}
+
+.banner-background {
+  width: 100%;
+  height: auto;
+  /* object-fit: cover; */
 }
