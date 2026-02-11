@@ -1,19 +1,22 @@
 // import Image from 'next/image';
 import { fetchTMDB } from '../lib/tmdb';
-import { Movie } from '@/types/tmdb';
+import { Movie, HomeProps } from '@/types/tmdb';
 import { Card } from '@/components/card';
 import { Header } from '@/components/header';
 
-import { TMDB_IMAGE_BASE } from '@/lib/constants';
-import Image from 'next/image';
+// import { TMDB_IMAGE_BASE } from '@/lib/constants';
+// import Image from 'next/image';
 
-export default async function Home() {
-  const data = await fetchTMDB<Movie>('/movie/top_rated');
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const category = params?.category ?? 'now_playing';
+  const data = await fetchTMDB<Movie>(`/movie/${category}`);
   console.log(data);
+  console.log('CATEGORY:', category);
 
   return (
     <>
-      <Header key={data.results[0].id} {...data} />
+      <Header data={data} />
       <main className="main">
         {data.results.map((movie) => (
           <Card key={movie.id} {...movie} />

@@ -8,6 +8,7 @@ export async function fetchTMDB<T>(endpoint: string): Promise<TMDBResponse<T>> {
       accept: 'application/json',
       Authorization: `Bearer ${TOKEN}`,
     },
+    // cache: 'no-store',
     next: {
       revalidate: 3600,
     },

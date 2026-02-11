@@ -17,6 +17,7 @@ export function Card(movie: Movie) {
             width={500}
             height={250}
           ></Image>
+          <div className="text-amber-400 text-center">{`★ ${movie.vote_average.toString().slice(0, 3)}`}</div>
           {/* <h1 className="movie-title">{movie.title}</h1> */}
         </div>
       </section>

@@ -44,3 +44,13 @@ export interface TVShow {
   vote_average: number;
   vote_count: number;
 }
+
+export interface HeaderProps {
+  data: TMDBResponse<Movie>;
+}
+
+export interface HomeProps {
+  searchParams: {
+    category?: string;
+  };
+}
