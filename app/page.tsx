@@ -11,8 +11,9 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const category = params?.category ?? 'now_playing';
   const data = await fetchTMDB<Movie>(`/movie/${category}`);
-  console.log(data);
-  console.log('CATEGORY:', category);
+  // console.log(data);
+  // console.log('CATEGORY:', category);
+  console.log('hej');
 
   return (
     <>

@@ -12,7 +12,7 @@ export function Header({ data }: HeaderProps) {
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
-    router.push(`/?category=${value}`);
+    router.push(`/?category=${value}`, { scroll: false });
     router.refresh();
   }
 
