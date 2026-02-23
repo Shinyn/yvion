@@ -13,7 +13,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const data = await fetchTMDB<Movie>(`/movie/${category}`);
   // console.log(data);
   // console.log('CATEGORY:', category);
-  console.log('hej');
 
   return (
     <>

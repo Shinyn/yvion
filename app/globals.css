@@ -42,8 +42,10 @@ body {
 .movie-image {
   border: 1px rgb(255, 255, 255) solid;
   border-radius: 1rem;
+  position: relative;
 
   &:hover {
+    transition: all 0.1s ease-out;
     transform: scale(1.01);
     cursor: pointer;
   }

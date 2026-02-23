@@ -16,15 +16,15 @@ export function Card(movie: Movie) {
   return (
     <>
       <section>
-        <div key={movie.id} onClick={goToMovie}>
+        <div key={movie.id} onClick={goToMovie} className="relative movie-image">
           <Image
-            className="movie-image"
+            className="rounded-2xl z-0"
             src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
             alt={movie.title}
             width={500}
             height={250}
           ></Image>
-          <div className="text-amber-400 text-center">{`★ ${movie.vote_average.toString().slice(0, 3)}`}</div>
+          <span className="text-amber-400 top-4 font-bold drop-shadow-[0px_0px_1px] drop-shadow-black text-shadow-[0px_0px_3px] text-shadow-black left-4 z-10 absolute text-center">{`★ ${movie.vote_average.toString().slice(0, 3)}`}</span>
         </div>
       </section>
     </>
