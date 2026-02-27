@@ -14,19 +14,24 @@ export default async function Movies({ params }: { params: { movieId: string } }
   return (
     <div className="h-screen">
       <section className="bg-center bg-[url(@/public/movie-theater.png)]  bg-cover flex items-center h-full justify-center align-middle relative">
-        <div className="flex justify-center">
+        <div className="flex justify-center max-[1000px]:flex-col max-w-200 max-[1000px]:place-items-center max-[1000px]:px-2">
           <Image
             src={`${TMDB_IMAGE_BASE}/${movie.poster_path}`}
             alt={`${movie.title}`}
-            height={300}
-            width={300}
-            className="rounded-l-2xl border border-r-0 border-black shadow-2xl "
+            height={800}
+            width={400}
+            className="rounded-l-2xl  border border-r-0 border-black 
+            max-[1000px]:rounded-l-0 max-[1000px]:rounded-t-2xl
+             max-[1000px]:border-b-0 max-[1000px]:rounded-b-none"
           />
           <p
-            className="movie-description bg-white/50 border justify-between flex flex-col text-black text-pretty border-l-0 
-          rounded-r-2xl font-bold backdrop-blur-md text-shadow-indigo-200 text-xl p-4 text-center"
+            className="max-[1000px]:w-[clamp(20vw,400px,100%)] w-[clamp(25vw,30vw,100%)] 
+            bg-white/50 border justify-between flex flex-col 
+            text-black text-pretty border-l-0 rounded-r-2xl max-[1000px]:rounded-t-none max-[1000px]:rounded-b-2xl max-[1000px]:border-l font-bold 
+            backdrop-blur-md text-shadow-indigo-200
+             text-xl p-4 text-center"
           >
-            <span className="text-2xl border-b-2 border-amber-400">{movie.original_title}</span>
+            <span className="text-2xl border-b-2 border-amber-800">{movie.original_title}</span>
             <span>{movie.overview}</span>
             <div className="flex justify-center gap-2 bg-red-500/70 rounded-md">
               {movie.genres.map((item) => {
