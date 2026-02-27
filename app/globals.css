@@ -72,14 +72,9 @@ body {
   display: block;
   width: 100%;
   height: auto;
-  border: 2px solid rgb(216, 103, 5);
 }
 
 select {
   color: #0a0a0a;
   background-color: white;
-}
-
-.movie-description {
-  width: clamp(20vw, 30vw, 100%);
 }
