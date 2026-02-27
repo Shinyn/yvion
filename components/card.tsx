@@ -16,7 +16,13 @@ export function Card(movie: Movie) {
   return (
     <>
       <section>
-        <div key={movie.id} onClick={goToMovie} className="relative movie-image">
+        <div
+          key={movie.id}
+          onClick={goToMovie}
+          className="relative border-teal-800 rounded-2xl border hover:scale-101 transition-transform
+           hover:drop-shadow-yellow-200 hover:drop-shadow-2xl/100 duration-200 ease-in-out 
+           hover:cursor-pointer hover:border-yellow-200"
+        >
           <Image
             className="rounded-2xl z-0"
             src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
