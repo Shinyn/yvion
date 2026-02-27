@@ -16,6 +16,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
   return (
     <>
+      {/* Lägg till logga */}
       <Header data={data} />
       <main className="main">
         {data.results.map((movie) => (
