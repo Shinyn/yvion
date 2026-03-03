@@ -20,7 +20,7 @@ export async function fetchTMDB<T>(endpoint: string): Promise<TMDBResponse<T>> {
   return response.json();
 }
 
-export async function fetchTMDBItem(endpoint: string): Promise<Movie> {
+export async function fetchTMDBItem<T>(endpoint: string): Promise<T> {
   const response = await fetch(`${TMDB_API_BASE}${endpoint}`, {
     headers: {
       accept: 'application/json',
