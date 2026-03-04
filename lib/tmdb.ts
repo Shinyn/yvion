@@ -1,4 +1,4 @@
-import { Movie, TMDBResponse } from '@/types/tmdb';
+import { TMDBResponse } from '@/types/tmdb';
 import { TMDB_API_BASE } from '@/lib/constants';
 const TOKEN = process.env.TMDB_TOKEN;
 
