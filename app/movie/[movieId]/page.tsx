@@ -13,8 +13,8 @@ export default async function Movies({ params }: { params: { movieId: string } }
   );
 
   return (
-    <div className="h-screen max-[1000px]:h-full">
-      <section className="p-2 bg-center bg-[url(@/public/movie-theater.png)] backdrop-blur-md bg-cover flex flex-col gap-4 items-center h-full justify-center align-middle relative">
+    <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
+      <section className="p-2 backdrop-blur-sm flex flex-col gap-4 items-center h-full justify-center align-middle relative">
         <iframe
           className="w-full max-w-300 min-h-110 h-full"
           src={`https://www.youtube.com/embed/${officialTrailer?.key}`}
@@ -27,7 +27,7 @@ export default async function Movies({ params }: { params: { movieId: string } }
             alt={`${movie.title}`}
             height={800}
             width={400}
-            className="rounded-l-2xl  border border-r-0 border-black 
+            className="rounded-l-2xl border border-r-0 border-black 
             max-[1000px]:rounded-l-0 max-[1000px]:rounded-t-2xl
              max-[1000px]:border-b-0 max-[1000px]:rounded-b-none"
           />
@@ -40,12 +40,16 @@ export default async function Movies({ params }: { params: { movieId: string } }
           >
             <span className="text-2xl border-b-2 border-amber-800">{movie.original_title}</span>
             <p>{movie.overview}</p>
-            <span className="flex justify-center gap-2 bg-red-500/70 rounded-md">
-              {movie.genres.map((item) => {
-                console.log('This is the genres', item.name);
-                return <span key={item.id}>{item.name}</span>;
+            <div className="flex justify-center flex-wrap bg-red-500/70 rounded-md">
+              {movie.genres.map((genre) => {
+                console.log('This is the genres', genre.name);
+                return (
+                  <span className="pr-2" key={genre.id}>
+                    {genre.name}
+                  </span>
+                );
               })}
-            </span>
+            </div>
             <span className="place-content-end rounded-md bg-white/70">{movie.release_date}</span>
           </div>
         </div>

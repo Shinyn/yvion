@@ -33,7 +33,12 @@ export function Header({ data }: HeaderProps) {
         width={500}
         height={250}
       ></Image>
-      <Pagination />
+      <Pagination
+        page={data.page}
+        results={data.results}
+        total_pages={data.total_pages}
+        total_results={data.total_results}
+      />
     </header>
   );
 }
