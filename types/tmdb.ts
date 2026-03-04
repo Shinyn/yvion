@@ -9,9 +9,7 @@ export interface Movie {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: null;
-
   budget: number;
-
   genres: {
     id: number;
     name: string;
@@ -20,16 +18,12 @@ export interface Movie {
   homepage: string;
   id: number;
   imdb_id: string | null;
-
   origin_country: string[];
-
   original_language: string;
   original_title: string;
   overview: string;
   popularity: number;
-
   poster_path: string | null;
-
   production_companies: {
     id: number;
     logo_path: string | null;
@@ -54,10 +48,8 @@ export interface Movie {
 
   status: string;
   tagline: string;
-
   title: string;
   video: boolean;
-
   vote_average: number;
   vote_count: number;
 }
@@ -110,5 +102,6 @@ export interface HeaderProps {
 export interface HomeProps {
   searchParams: {
     category?: string;
+    page?: string;
   };
 }
