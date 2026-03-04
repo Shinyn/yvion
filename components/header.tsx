@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { HeaderProps } from '@/types/tmdb';
 import Image from 'next/image';
+import Pagination from './pagination';
 
 export function Header({ data }: HeaderProps) {
   const router = useRouter();
@@ -32,6 +33,11 @@ export function Header({ data }: HeaderProps) {
         width={500}
         height={250}
       ></Image>
+      <Pagination />
     </header>
   );
 }
+
+/*
+Ska innehålla filtrering, searchbar, logo, paginering och nån typ av bakgrundsbild
+*/
