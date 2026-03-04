@@ -13,8 +13,8 @@ export default async function Movies({ params }: { params: { movieId: string } }
   );
 
   return (
-    <div className="h-screen max-[1000px]:h-full">
-      <section className="p-2 bg-center bg-[url(@/public/movie-theater.png)] backdrop-blur-md bg-cover flex flex-col gap-4 items-center h-full justify-center align-middle relative">
+    <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
+      <section className="p-2 backdrop-blur-sm flex flex-col gap-4 items-center h-full justify-center align-middle relative">
         <iframe
           className="w-full max-w-300 min-h-110 h-full"
           src={`https://www.youtube.com/embed/${officialTrailer?.key}`}
