@@ -75,12 +75,3 @@ select {
   color: #0a0a0a;
   background-color: white;
 }
-
-button {
-  padding: 0.5rem;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #3caa4f;
-  }
-}
