@@ -13,15 +13,15 @@ export default async function Movies({ params }: { params: { movieId: string } }
   );
 
   return (
-    <div className="h-screen">
-      <section className="p-4 bg-center bg-[url(@/public/movie-theater.png)] backdrop-blur-md bg-cover flex flex-col gap-4 items-center h-full justify-center align-middle relative">
+    <div className="h-screen max-[1000px]:h-full">
+      <section className="p-2 bg-center bg-[url(@/public/movie-theater.png)] backdrop-blur-md bg-cover flex flex-col gap-4 items-center h-full justify-center align-middle relative">
         <iframe
-          className="w-full max-w-300 px-2 h-full"
+          className="w-full max-w-300 min-h-110 h-full"
           src={`https://www.youtube.com/embed/${officialTrailer?.key}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         ></iframe>
-        <div className="flex justify-center max-[1000px]:flex-col max-w-200 z-50 max-[1000px]:place-items-center max-[1000px]:p-2">
+        <div className="flex justify-center max-[1000px]:flex-col max-w-200 z-50 max-[1000px]:place-items-center">
           <Image
             src={`${TMDB_IMAGE_BASE}/${movie.poster_path}`}
             alt={`${movie.title}`}
