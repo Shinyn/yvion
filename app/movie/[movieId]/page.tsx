@@ -2,6 +2,7 @@ import { fetchTMDBItem } from '@/lib/tmdb';
 import Image from 'next/image';
 import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { Movie, VideoResponse } from '@/types/tmdb';
+import { Clock, Calendar } from 'lucide-react';
 
 export default async function Movies({ params }: { params: { movieId: string } }) {
   const { movieId } = await params;
@@ -11,6 +12,9 @@ export default async function Movies({ params }: { params: { movieId: string } }
   const officialTrailer = movie.videos.results.find(
     (video) => video.type === 'Trailer' && video.site === 'YouTube' && video.official,
   );
+
+  const hours = Math.floor(movie.runtime / 60);
+  const minutes = movie.runtime % 60;
 
   return (
     <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
@@ -33,24 +37,45 @@ export default async function Movies({ params }: { params: { movieId: string } }
           />
           <div
             className="max-[1000px]:w-[clamp(20vw,400px,100%)] w-[clamp(25vw,30vw,100%)] 
-            bg-white/50 border justify-between flex flex-col 
-            text-black text-pretty border-l-0 rounded-r-2xl max-[1000px]:rounded-t-none max-[1000px]:rounded-b-2xl max-[1000px]:border-l font-bold 
-            backdrop-blur-md text-shadow-indigo-200
-             text-xl p-4 text-center"
+            bg-black/80 border border-black justify-between flex flex-col 
+            text-white text-pretty rounded-r-2xl max-[1000px]:rounded-t-none 
+            max-[1000px]:rounded-b-2xl max-[1000px]:border-l font-bold 
+            backdrop-blur-md text-shadow-indigo-200 text-xl p-4"
           >
-            <span className="text-2xl border-b-2 border-amber-800">{movie.original_title}</span>
-            <p>{movie.overview}</p>
-            <div className="flex justify-center flex-wrap bg-red-500/70 rounded-md">
+            <span className="text-3xl">{movie.original_title}</span>
+
+            <div className="flex">
+              {/* RELEASE DATE */}
+              <span className="place-content-end flex gap-2  w-fit rounded-4xl py-1 px-2 ">
+                {/* Icon Calendar*/}
+                <Calendar className={`self-center w-5`} />
+                {movie.release_date.slice(0, -6)}
+              </span>
+
+              {/* RUNTIME */}
+              <span className="place-content-end flex gap-2  w-fit rounded-4xl py-1 px-2">
+                <Clock className={`self-center w-5`} />
+                {`${hours}h ${minutes}m`}
+              </span>
+            </div>
+
+            {/* GENRER */}
+            <div className="flex pl-0 p-2 flex-wrap gap-2">
               {movie.genres.map((genre) => {
                 console.log('This is the genres', genre.name);
                 return (
-                  <span className="pr-2" key={genre.id}>
+                  <span
+                    className="px-3 py-1 text-[#000000]
+                      rounded-4xl bg-linear-to-t from-[#10a372] via-[#64faff] to-[#3dffc2]
+                    "
+                    key={genre.id}
+                  >
                     {genre.name}
                   </span>
                 );
               })}
             </div>
-            <span className="place-content-end rounded-md bg-white/70">{movie.release_date}</span>
+            <p className="text-gray-100 ">{movie.overview}</p>
           </div>
         </div>
       </section>
