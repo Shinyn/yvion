@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { Movie, VideoResponse } from '@/types/tmdb';
 import { Clock, Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 export default async function Movies({ params }: { params: { movieId: string } }) {
   const { movieId } = await params;
@@ -15,6 +16,12 @@ export default async function Movies({ params }: { params: { movieId: string } }
 
   const hours = Math.floor(movie.runtime / 60);
   const minutes = movie.runtime % 60;
+
+  const budget = Math.floor(movie.budget / 1000000);
+  const revenue = Math.floor(movie.revenue / 1000000);
+
+  const earnings = revenue - budget;
+  // const total = earnings > 0 ? `${movie.title} made $${earnings}M` : `${movie.title} lost $${earnings}M`;
 
   return (
     <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
@@ -35,27 +42,31 @@ export default async function Movies({ params }: { params: { movieId: string } }
             max-[1000px]:rounded-l-0 max-[1000px]:rounded-t-2xl
              max-[1000px]:border-b-0 max-[1000px]:rounded-b-none"
           />
-          <div
+          <section
             className="max-[1000px]:w-[clamp(20vw,400px,100%)] w-[clamp(25vw,30vw,100%)] 
-            bg-black/80 border border-black justify-between flex flex-col 
+            bg-black/80 border border-black justify-center gap-2 flex flex-col 
             text-white text-pretty rounded-r-2xl max-[1000px]:rounded-t-none 
             max-[1000px]:rounded-b-2xl max-[1000px]:border-l font-bold 
             backdrop-blur-md text-shadow-indigo-200 text-xl p-4"
           >
-            <span className="text-3xl">{movie.original_title}</span>
+            <span className="text-3xl">{movie.title}</span>
 
             <div className="flex">
               {/* RELEASE DATE */}
-              <span className="place-content-end flex gap-2  w-fit rounded-4xl py-1 px-2 ">
-                {/* Icon Calendar*/}
+              <span className="place-content-end flex gap-1 w-fit rounded-4xl py-1 pr-4 ">
                 <Calendar className={`self-center w-5`} />
-                {movie.release_date.slice(0, -6)}
+                <span className="">{movie.release_date.slice(0, -6)}</span>
               </span>
 
               {/* RUNTIME */}
-              <span className="place-content-end flex gap-2  w-fit rounded-4xl py-1 px-2">
+              <span className="place-content-end flex gap-1 w-fit rounded-4xl py-1 pr-4">
                 <Clock className={`self-center w-5`} />
                 {`${hours}h ${minutes}m`}
+              </span>
+
+              {/* RAITING */}
+              <span className="text-[#ffc400] self-center font-bold border w-fit text-shadow-black px-2 py-.5 rounded-full bg-[#5e0e0e]">
+                {`★ ${movie.vote_average.toString().slice(0, 3)}`}
               </span>
             </div>
 
@@ -76,7 +87,25 @@ export default async function Movies({ params }: { params: { movieId: string } }
               })}
             </div>
             <p className="text-gray-100 ">{movie.overview}</p>
-          </div>
+
+            {/* <div className="bg-emerald-800">
+              {movie.production_companies.map((e) => (
+                <div key={e.id}>{e.name}</div>
+              ))}
+            </div> */}
+
+            {/* <div className="flex flex-col gap-1 pt-4">
+              <span className="text-[#ffee00]">Budget ${budget}M</span>
+              <span className="text-[#05d832]">Revenue ${revenue}M</span>
+              <span>Earnings ${earnings}M</span>
+            </div> */}
+            <Link
+              href={movie.homepage}
+              className="text-amber-500 mt-2 w-full hover:tracking-wider transition-all duration-300"
+            >
+              Watch here
+            </Link>
+          </section>
         </div>
       </section>
     </div>
@@ -97,3 +126,6 @@ Ska kunna ta bort filmer man inte är intresserad av -> delete knapp
 som lägger till filmens id i en array och sen filtrerar filmer med arrayen
 så man bara ser filmer som INTE ligger i arrayen.
 */
+
+// Ta bort alla branches lokalt (förutom main och dev)
+// git branch | grep -vE "main|dev" | xargs git branch -D
