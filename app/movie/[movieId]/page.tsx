@@ -56,8 +56,8 @@ export default async function Movies({ params }: { params: { movieId: string } }
             max-[800px]:rounded-b-2xl max-[800px]:border-l font-bold 
             backdrop-blur-md text-shadow-indigo-200 text-xl p-4"
           >
+            {/* TITLE */}
             <span className="text-3xl">{movie.title}</span>
-
             <div className="flex">
               {/* RELEASE DATE */}
               <span className="place-content-end flex gap-1 w-fit rounded-4xl py-1 pr-4 ">
