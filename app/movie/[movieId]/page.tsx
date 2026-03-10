@@ -1,27 +1,34 @@
 import { fetchTMDBItem } from '@/lib/tmdb';
 import Image from 'next/image';
 import { TMDB_IMAGE_BASE } from '@/lib/constants';
-import { Movie, VideoResponse } from '@/types/tmdb';
+import { Movie, VideoResponse, WatchProviderResponse } from '@/types/tmdb';
 import { Clock, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Movies({ params }: { params: { movieId: string } }) {
   const { movieId } = await params;
-  console.log('PARAM:', movieId);
-  const movie = await fetchTMDBItem<Movie & { videos: VideoResponse }>(`/movie/${movieId}?append_to_response=videos`);
-  console.log('This is the movie', movie);
+  // console.log('PARAM:', movieId);
+  const movie = await fetchTMDBItem<Movie & { videos: VideoResponse; 'watch/providers': WatchProviderResponse }>(
+    `/movie/${movieId}?append_to_response=videos,watch/providers`,
+  );
+  // console.log('This is the movie', movie);
   const officialTrailer = movie.videos.results.find(
     (video) => video.type === 'Trailer' && video.site === 'YouTube' && video.official,
   );
 
+  // const providers = movie['watch/providers'].results.SE;
+
   const hours = Math.floor(movie.runtime / 60);
   const minutes = movie.runtime % 60;
 
-  const budget = Math.floor(movie.budget / 1000000);
-  const revenue = Math.floor(movie.revenue / 1000000);
+  // const budget = Math.floor(movie.budget / 1000000);
+  // const revenue = Math.floor(movie.revenue / 1000000);
 
-  const earnings = revenue - budget;
+  // const earnings = revenue - budget;
   // const total = earnings > 0 ? `${movie.title} made $${earnings}M` : `${movie.title} lost $${earnings}M`;
+
+  console.log('These are the Providers:', movie['watch/providers']);
+  console.log(Object.keys(movie['watch/providers'].results));
 
   return (
     <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
@@ -32,21 +39,21 @@ export default async function Movies({ params }: { params: { movieId: string } }
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         ></iframe>
-        <div className="flex justify-center max-[1000px]:flex-col max-w-200 z-50 max-[1000px]:place-items-center">
+        <div className="flex justify-center max-[800px]:flex-col max-w-200 z-50 max-[800px]:place-items-center">
           <Image
             src={`${TMDB_IMAGE_BASE}/${movie.poster_path}`}
             alt={`${movie.title}`}
             height={800}
             width={400}
-            className="rounded-l-2xl border border-r-0 border-black 
-            max-[1000px]:rounded-l-0 max-[1000px]:rounded-t-2xl
-             max-[1000px]:border-b-0 max-[1000px]:rounded-b-none"
+            className="rounded-l-2xl border max-[800px]:border-r border-r-0 border-black 
+            max-[800px]:rounded-l-0 max-[800px]:rounded-t-2xl
+             max-[800px]:border-b-0 max-[800px]:rounded-b-none"
           />
           <section
             className="max-[1000px]:w-[clamp(20vw,400px,100%)] w-[clamp(25vw,30vw,100%)] 
             bg-black/80 border border-black justify-center gap-2 flex flex-col 
-            text-white text-pretty rounded-r-2xl max-[1000px]:rounded-t-none 
-            max-[1000px]:rounded-b-2xl max-[1000px]:border-l font-bold 
+            text-white text-pretty rounded-r-2xl max-[800px]:rounded-t-none 
+            max-[800px]:rounded-b-2xl max-[800px]:border-l font-bold 
             backdrop-blur-md text-shadow-indigo-200 text-xl p-4"
           >
             <span className="text-3xl">{movie.title}</span>
@@ -99,6 +106,7 @@ export default async function Movies({ params }: { params: { movieId: string } }
               <span className="text-[#05d832]">Revenue ${revenue}M</span>
               <span>Earnings ${earnings}M</span>
             </div> */}
+
             <Link
               href={movie.homepage}
               className="text-amber-500 mt-2 w-full hover:tracking-wider transition-all duration-300"
@@ -111,15 +119,6 @@ export default async function Movies({ params }: { params: { movieId: string } }
     </div>
   );
 }
-
-// Vad ska finnas med när man klickar på en film?
-/*
-Bild
-Info
-Trailer
-Var man hittar filmen
-
-*/
 
 /*
 Ska kunna ta bort filmer man inte är intresserad av -> delete knapp
