@@ -36,3 +36,12 @@ export async function fetchTMDBItem<T>(endpoint: string): Promise<T> {
 
   return response.json();
 }
+
+export async function fetchTMDBSearch() {
+  const options = { method: 'GET', headers: { accept: 'application/json' } };
+
+  fetch(`https://api.themoviedb.org/3/search/person`, options)
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+    .catch((err) => console.error(err));
+}
