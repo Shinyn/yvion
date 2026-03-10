@@ -7,12 +7,13 @@ import { ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-r
 export default function Pagination({ page, results, total_pages, total_results }: TMDBResponse<Movie>) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  console.log('This is the searchParams', searchParams);
-  console.log(
-    `Pagination here, we got page ${page}, total pages ${total_pages}, results ${results.map((e) => e.title)} and total results ${total_results}`,
-  );
+  // console.log('This is the searchParams', searchParams);
+  // console.log(
+  //   `Pagination here, we got page ${page}, total pages ${total_pages}, results ${results.map((e) => e.title)} and total results ${total_results}`,
+  // );
 
-  const pages = Array.from({ length: total_pages }, (_, i) => i + 1);
+  const maxPages = total_pages > 500 ? 500 : total_pages;
+  const pages = Array.from({ length: maxPages }, (_, i) => i + 1);
 
   const currentPage = Number(searchParams.get('page') ?? 1);
   const category = searchParams.get('category') ?? 'now_playing';
@@ -42,7 +43,7 @@ export default function Pagination({ page, results, total_pages, total_results }
           <ChevronLeft />
         </button>
         <select
-          className={`hover:cursor-pointer p-2 rounded-md`}
+          className={`hover:cursor-pointer p-2 rounded-md text-black bg-white`}
           name="page"
           value={currentPage}
           onChange={(e) => changePage(Number(e.target.value))}
@@ -62,7 +63,7 @@ export default function Pagination({ page, results, total_pages, total_results }
         </button>
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
-          onClick={() => changePage(total_pages)}
+          onClick={() => changePage(total_pages > 500 ? 500 : total_pages)}
           disabled={currentPage === total_pages}
         >
           <ChevronsRight />

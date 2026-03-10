@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export function Card(movie: Movie) {
   const router = useRouter();
-  // console.log('This is the DATA', movieData);
 
   function goToMovie() {
     router.push(`/movie/${movie.id}`);
@@ -19,7 +18,7 @@ export function Card(movie: Movie) {
         <div
           key={movie.id}
           onClick={goToMovie}
-          className="relative border-teal-800 rounded-2xl border hover:scale-101 transition-transform
+          className="group relative border-transparent rounded-2xl border hover:scale-101 transition-transform
            hover:drop-shadow-yellow-200 hover:drop-shadow-2xl/100 duration-200 ease-in-out 
            hover:cursor-pointer hover:border-yellow-200"
         >
@@ -30,7 +29,7 @@ export function Card(movie: Movie) {
             width={500}
             height={250}
           ></Image>
-          <span className="text-amber-400 top-4 font-bold drop-shadow-[0px_0px_1px] drop-shadow-black text-shadow-[0px_0px_3px] text-shadow-black left-4 z-10 absolute text-center">{`★ ${movie.vote_average.toString().slice(0, 3)}`}</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-all duration-600 ease-in-out text-amber-400 top-4 font-bold drop-shadow-[0px_0px_1px] drop-shadow-black text-shadow-[0px_0px_3px] text-shadow-black left-4 z-10 absolute text-center">{`★ ${movie.vote_average.toString().slice(0, 3)}`}</span>
         </div>
       </section>
     </>
