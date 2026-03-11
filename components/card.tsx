@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 export function Card(movie: Movie) {
   const router = useRouter();
+  const poster = movie?.poster_path;
 
   function goToMovie() {
     router.push(`/movie/${movie.id}`);
@@ -25,7 +26,7 @@ export function Card(movie: Movie) {
           <div className="group-hover:opacity-100 opacity-0 transition-all duration-500 ease-in-out absolute w-full h-full z-10 rounded-2xl bg-linear-to-t from-black/80 to-transparent"></div>
           <Image
             className="rounded-2xl z-0"
-            src={`${TMDB_IMAGE_BASE}${movie.poster_path}`}
+            src={poster ? `${TMDB_IMAGE_BASE}/${poster}` : '/movie-placeholder.svg'}
             alt={movie.title}
             width={500}
             height={250}
