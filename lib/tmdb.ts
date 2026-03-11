@@ -8,15 +8,13 @@ export async function fetchTMDB<T>(endpoint: string): Promise<TMDBResponse<T>> {
       accept: 'application/json',
       Authorization: `Bearer ${TOKEN}`,
     },
-    // cache: 'no-store',
-    next: {
-      revalidate: 3600,
-    },
+    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
     throw new Error('TMDB request failed');
   }
+
   return response.json();
 }
 
@@ -35,13 +33,4 @@ export async function fetchTMDBItem<T>(endpoint: string): Promise<T> {
   }
 
   return response.json();
-}
-
-export async function fetchTMDBSearch() {
-  const options = { method: 'GET', headers: { accept: 'application/json' } };
-
-  fetch(`https://api.themoviedb.org/3/search/person`, options)
-    .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.error(err));
 }
