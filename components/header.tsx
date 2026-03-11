@@ -5,16 +5,50 @@ import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { HeaderProps } from '@/types/tmdb';
 import Image from 'next/image';
 import Pagination from './pagination';
+import { useState, useEffect } from 'react';
 
 export function Header({ data }: HeaderProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get('category') ?? 'now_playing';
+  const backdrop = data.results?.[0]?.backdrop_path;
+
+  const currentSearch = searchParams.get('search') ?? '';
+  const [query, setQuery] = useState(currentSearch);
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
-    router.push(`/?category=${value}`, { scroll: false });
-    router.refresh();
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set('category', value);
+    params.delete('search'); // category view should reset search
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`, { scroll: false });
+  }
+
+  const paramsString = searchParams.toString();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams(paramsString);
+      const currentSearch = params.get('search') ?? '';
+
+      if (query === currentSearch) return;
+      if (query) {
+        params.set('search', query);
+        params.delete('category');
+        params.set('page', '1');
+      } else {
+        params.delete('search');
+      }
+      router.push(`/?${params.toString()}`, { scroll: false });
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [query, router, paramsString]);
+
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value);
   }
 
   return (
@@ -25,13 +59,15 @@ export function Header({ data }: HeaderProps) {
       */}
       <Image
         className=" overflow-clip w-full"
-        src={`${TMDB_IMAGE_BASE}/${data.results[0].backdrop_path}`}
+        src={backdrop ? `${TMDB_IMAGE_BASE}/${backdrop}` : '/placeholder-backdrop.jpg'}
         alt="background"
         width={500}
         height={250}
       ></Image>
       <input
         type="search"
+        value={query}
+        onChange={handleSearch}
         placeholder="I want to watch..."
         className=" border border-white rounded-2xl justify-self-center w-[clamp(200px,50vw,30rem)] px-4 py-[.2rem] m-4 mx-auto bg-[#1f1f1f]"
       />
