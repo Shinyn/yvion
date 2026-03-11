@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750">
+  <defs>
+    <!-- Film grain texture -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+      <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Vignette gradient -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1a1209" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.75"/>
+    </radialGradient>
+
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1510"/>
+      <stop offset="50%" stop-color="#0e0c0a"/>
+      <stop offset="100%" stop-color="#16110d"/>
+    </linearGradient>
+
+    <!-- Gold shimmer on reel -->
+    <linearGradient id="reelGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a07830"/>
+      <stop offset="40%" stop-color="#d4a550"/>
+      <stop offset="70%" stop-color="#8a6020"/>
+      <stop offset="100%" stop-color="#c49040"/>
+    </linearGradient>
+
+    <!-- Subtle horizontal scanlines -->
+    <pattern id="scanlines" x="0" y="0" width="500" height="4" patternUnits="userSpaceOnUse">
+      <rect width="500" height="2" fill="rgba(0,0,0,0.08)"/>
+    </pattern>
+
+    <!-- Film strip sprocket holes pattern -->
+    <pattern id="sprockets" x="0" y="0" width="30" height="40" patternUnits="userSpaceOnUse">
+      <rect width="30" height="40" fill="#0a0806"/>
+      <rect x="5" y="8" width="20" height="24" rx="3" fill="#1a1410"/>
+    </pattern>
+
+    <clipPath id="circleClip">
+      <circle cx="250" cy="310" r="88"/>
+    </clipPath>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="500" height="750" fill="url(#bg)"/>
+
+  <!-- Film strip borders -->
+  <rect x="0" y="0" width="38" height="750" fill="url(#sprockets)"/>
+  <rect x="462" y="0" width="38" height="750" fill="url(#sprockets)"/>
+
+  <!-- Decorative horizontal rule lines -->
+  <line x1="50" y1="90" x2="450" y2="90" stroke="#5a4020" stroke-width="0.5" opacity="0.6"/>
+  <line x1="50" y1="660" x2="450" y2="660" stroke="#5a4020" stroke-width="0.5" opacity="0.6"/>
+
+  <!-- Top title bar area -->
+  <rect x="50" y="60" width="400" height="38" fill="#0a0806" opacity="0.7" rx="2"/>
+  <text x="250" y="86" font-family="'Georgia', 'Times New Roman', serif" font-size="13" font-style="italic"
+        fill="#6a5030" text-anchor="middle" letter-spacing="5">NO POSTER AVAILABLE</text>
+
+  <!-- Main circle reel background -->
+  <circle cx="250" cy="310" r="100" fill="#111009" stroke="#3a2a10" stroke-width="1.5" opacity="0.9"/>
+
+  <!-- Film reel outer ring -->
+  <circle cx="250" cy="310" r="88" fill="none" stroke="url(#reelGold)" stroke-width="3.5" opacity="0.85"/>
+
+  <!-- Reel spokes -->
+  <g transform="translate(250,310)" stroke="#8a6020" stroke-width="2.5" opacity="0.75">
+    <line x1="0" y1="-88" x2="0" y2="-20"/>
+    <line x1="76.2" y1="44" x2="17.3" y2="10"/>
+    <line x1="-76.2" y1="44" x2="-17.3" y2="10"/>
+    <line x1="0" y1="88" x2="0" y2="20"/>
+    <line x1="-76.2" y1="-44" x2="-17.3" y2="-10"/>
+    <line x1="76.2" y1="-44" x2="17.3" y2="-10"/>
+  </g>
+
+  <!-- Inner reel hub -->
+  <circle cx="250" cy="310" r="22" fill="#0e0c09" stroke="#7a5818" stroke-width="2" opacity="0.9"/>
+  <circle cx="250" cy="310" r="8" fill="#1c1610" stroke="#5a4010" stroke-width="1.2"/>
+
+  <!-- Small sprocket holes on reel -->
+  <g fill="#0a0806" stroke="#4a3510" stroke-width="0.8">
+    <circle cx="250" cy="232" r="5.5"/>
+    <circle cx="316" cy="270" r="5.5"/>
+    <circle cx="316" cy="350" r="5.5"/>
+    <circle cx="250" cy="388" r="5.5"/>
+    <circle cx="184" cy="350" r="5.5"/>
+    <circle cx="184" cy="270" r="5.5"/>
+  </g>
+
+  <!-- Camera/projector icon below reel -->
+  <g transform="translate(210, 440)" fill="none" stroke="#5a4020" stroke-width="1.8" opacity="0.7">
+    <!-- Lens body -->
+    <rect x="0" y="8" width="56" height="34" rx="4"/>
+    <!-- Lens circle -->
+    <circle cx="28" cy="25" r="12"/>
+    <circle cx="28" cy="25" r="6"/>
+    <!-- Viewfinder bump -->
+    <rect x="42" y="2" width="14" height="10" rx="2"/>
+    <!-- Film door lines -->
+    <line x1="8" y1="8" x2="8" y2="42"/>
+  </g>
+
+  <!-- Decorative corner ornaments -->
+  <g stroke="#5a3e18" stroke-width="1.2" fill="none" opacity="0.7">
+    <!-- Top left -->
+    <path d="M58,110 L58,125 L73,125"/>
+    <!-- Top right -->
+    <path d="M442,110 L442,125 L427,125"/>
+    <!-- Bottom left -->
+    <path d="M58,640 L58,625 L73,625"/>
+    <!-- Bottom right -->
+    <path d="M442,640 L442,625 L427,625"/>
+  </g>
+
+  <!-- Main title text -->
+  <text x="250" y="570" font-family="'Georgia', 'Times New Roman', serif"
+        font-size="26" font-weight="bold" fill="#c8a050"
+        text-anchor="middle" letter-spacing="3" opacity="0.9">MOVIE TITLE</text>
+
+  <!-- Subtitle / genre placeholder -->
+  <text x="250" y="600" font-family="'Georgia', 'Times New Roman', serif"
+        font-size="11" fill="#7a6040"
+        text-anchor="middle" letter-spacing="6" font-style="italic">UNKNOWN TITLE</text>
+
+  <!-- Year placeholder -->
+  <text x="250" y="630" font-family="'Courier New', monospace"
+        font-size="12" fill="#5a4525"
+        text-anchor="middle" letter-spacing="4">· · · ·</text>
+
+  <!-- Scanlines overlay -->
+  <rect width="500" height="750" fill="url(#scanlines)" opacity="0.4"/>
+
+  <!-- Vignette -->
+  <rect width="500" height="750" fill="url(#vignette)"/>
+
+  <!-- Film grain overlay -->
+  <rect width="500" height="750" fill="#8a6030" filter="url(#grain)" opacity="0.04"/>
+
+  <!-- Top & bottom cinematic letterbox shadows -->
+  <rect x="0" y="0" width="500" height="55" fill="url(#bg)" opacity="0.85"/>
+  <rect x="0" y="695" width="500" height="55" fill="url(#bg)" opacity="0.85"/>
+</svg>
