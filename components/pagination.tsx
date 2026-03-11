@@ -1,13 +1,12 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Movie, TMDBResponse } from '@/types/tmdb';
+import { PaginationProps } from '@/types/tmdb';
 import { ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-react';
 
-export default function Pagination({ page, results, total_pages, total_results }: TMDBResponse<Movie>) {
+export default function Pagination({ page, results, total_pages, total_results }: PaginationProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  // console.log('This is the searchParams', searchParams);
   // console.log(
   //   `Pagination here, we got page ${page}, total pages ${total_pages}, results ${results.map((e) => e.title)} and total results ${total_results}`,
   // );
@@ -16,12 +15,10 @@ export default function Pagination({ page, results, total_pages, total_results }
   const pages = Array.from({ length: maxPages }, (_, i) => i + 1);
 
   const currentPage = Number(searchParams.get('page') ?? 1);
-  const category = searchParams.get('category') ?? 'now_playing';
 
   function changePage(newPage: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(newPage));
-    params.set('category', category);
     router.push(`/?${params.toString()}`, { scroll: false });
   }
 
@@ -57,14 +54,14 @@ export default function Pagination({ page, results, total_pages, total_results }
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
           onClick={() => changePage(currentPage + 1)}
-          disabled={currentPage === total_pages}
+          disabled={currentPage === maxPages}
         >
           <ChevronRight />
         </button>
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
           onClick={() => changePage(total_pages > 500 ? 500 : total_pages)}
-          disabled={currentPage === total_pages}
+          disabled={currentPage === maxPages}
         >
           <ChevronsRight />
         </button>
