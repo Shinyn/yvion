@@ -9,12 +9,22 @@ export default async function Home({ searchParams }: HomeProps) {
   const category = params?.category ?? 'now_playing';
   const rawPage = Number(params.page ?? '1');
   const page = Math.min(Math.max(rawPage, 1), 500);
-  const data = await fetchTMDB<Movie>(`/movie/${category}?page=${page}`);
+  const search = params.search;
+
+  let endpoint;
+
+  if (search) {
+    endpoint = `/search/movie?query=${encodeURIComponent(search)}&page=${page}`;
+  } else {
+    endpoint = `/movie/${category}?page=${page}`;
+  }
+
+  const data = await fetchTMDB<Movie>(endpoint);
 
   return (
     <>
-      {/* Lägg till logga */}
       <Header data={data} />
+
       <main className="main p-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {data.results.map((movie) => (
           <Card key={movie.id} {...movie} />
