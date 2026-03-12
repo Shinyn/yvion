@@ -11,7 +11,18 @@ export function Header({ data }: HeaderProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get('category') ?? 'now_playing';
-  const backdrop = data.results?.[0]?.backdrop_path;
+  const [index, setIndex] = useState(0);
+  const backdrops = data.results.map((movie) => movie.backdrop_path).filter(Boolean);
+
+  useEffect(() => {
+    if (!backdrops.length) return;
+
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % backdrops.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [backdrops.length]);
 
   const currentSearch = searchParams.get('search') ?? '';
   const [query, setQuery] = useState(currentSearch);
@@ -19,6 +30,7 @@ export function Header({ data }: HeaderProps) {
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     const params = new URLSearchParams(searchParams.toString());
+    setQuery('');
 
     params.set('category', value);
     params.delete('search'); // category view should reset search
@@ -53,17 +65,16 @@ export function Header({ data }: HeaderProps) {
 
   return (
     <header className="flex flex-col justify-center">
-      {/* Gör om denna Image till ett bildspel som loopar igenom samtliga filmer 
-          (på nuvarande page) och har dom som bakgrundsbild. Ska fade'a till svart
-          mot botten
-      */}
-      <Image
-        className=" overflow-clip w-full"
-        src={backdrop ? `${TMDB_IMAGE_BASE}/${backdrop}` : '/placeholder-backdrop.jpg'}
-        alt="background"
-        width={500}
-        height={250}
-      ></Image>
+      <div className="relative">
+        <Image
+          className="mx-auto transition-all duration-1000 w-[clamp(200px,100vw,90rem)] "
+          src={backdrops.length ? `${TMDB_IMAGE_BASE}/${backdrops[index]}` : '/placeholder-backdrop.jpg'}
+          alt="background"
+          width={500}
+          height={250}
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black" />
+      </div>
       <input
         type="search"
         value={query}
@@ -77,7 +88,12 @@ export function Header({ data }: HeaderProps) {
         total_pages={data.total_pages}
         total_results={data.total_results}
       />
-      <select className="text-black bg-white" name="Movie Lists" value={currentCategory} onChange={handleChange}>
+      <select
+        className="text-black mx-auto p-1 rounded-md bg-white w-30"
+        name="Movie Lists"
+        value={currentCategory}
+        onChange={handleChange}
+      >
         <option value="now_playing">Now Playing</option>
         <option value="popular">Popular</option>
         <option value="top_rated">Top Rated</option>

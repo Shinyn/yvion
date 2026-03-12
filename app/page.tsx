@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: HomeProps) {
     <>
       <Header data={data} />
 
-      <main className="main p-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+      <main className="main w-[clamp(200px,100vw,90rem)] mx-auto p-4 grid gap-4 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
         {data.results.map((movie) => (
           <Card key={movie.id} {...movie} />
         ))}
