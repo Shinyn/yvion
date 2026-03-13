@@ -142,6 +142,8 @@ export interface HomeProps {
     category?: string;
     page?: string;
     search?: string;
+    decade?: string;
+    sort?: string;
   }>;
 }
 
