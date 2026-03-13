@@ -4,7 +4,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { HeaderProps } from '@/types/tmdb';
 import Image from 'next/image';
-import Pagination from './pagination';
 import { useState, useEffect } from 'react';
 
 export function Header({ data }: HeaderProps) {
@@ -13,7 +12,13 @@ export function Header({ data }: HeaderProps) {
   const currentCategory = searchParams.get('category') ?? 'now_playing';
   const [index, setIndex] = useState(0);
   const backdrops = data.results.map((movie) => movie.backdrop_path).filter(Boolean);
+  const currentSearch = searchParams.get('search') ?? '';
+  const [query, setQuery] = useState(currentSearch);
+  const paramsString = searchParams.toString();
+  const currentDecade = searchParams.get('decade') ?? '';
+  const currentSort = searchParams.get('sort') ?? '';
 
+  // SLIDESHOW
   useEffect(() => {
     if (!backdrops.length) return;
 
@@ -24,22 +29,18 @@ export function Header({ data }: HeaderProps) {
     return () => clearInterval(interval);
   }, [backdrops.length]);
 
-  const currentSearch = searchParams.get('search') ?? '';
-  const [query, setQuery] = useState(currentSearch);
-
+  // CATEGORY
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     const params = new URLSearchParams(searchParams.toString());
     setQuery('');
-
     params.set('category', value);
     params.delete('search'); // category view should reset search
     params.set('page', '1');
     router.push(`/?${params.toString()}`, { scroll: false });
   }
 
-  const paramsString = searchParams.toString();
-
+  // SEARCH
   useEffect(() => {
     const timer = setTimeout(() => {
       const params = new URLSearchParams(paramsString);
@@ -59,13 +60,24 @@ export function Header({ data }: HeaderProps) {
     return () => clearTimeout(timer);
   }, [query, router, paramsString]);
 
+  // SEARCH INPUT
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setQuery(e.target.value);
   }
 
   return (
-    <header className="flex flex-col justify-center">
-      <div className="relative">
+    <header className="flex flex-col w-full max-w-360 mx-auto">
+      <div className="flex border-6 border-double border-amber-500 justify-center">
+        <Image className="p-2" src={'/logo.png'} alt="logo" width={80} height={80} />
+        <input
+          type="search"
+          value={query}
+          onChange={handleSearch}
+          placeholder="I want to watch..."
+          className=" border border-white rounded-2xl justify-self-center w-[clamp(180px,40vw,30rem)] px-4 py-[.2rem] m-4 mx-auto bg-[#1f1f1f]"
+        />
+      </div>
+      <div className="relative border-6 border-t-0 border-double border-amber-500">
         <Image
           className="mx-auto transition-all duration-1000 w-[clamp(200px,100vw,90rem)] "
           src={backdrops.length ? `${TMDB_IMAGE_BASE}/${backdrops[index]}` : '/placeholder-backdrop.jpg'}
@@ -75,30 +87,64 @@ export function Header({ data }: HeaderProps) {
         />
         <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black" />
       </div>
-      <input
-        type="search"
-        value={query}
-        onChange={handleSearch}
-        placeholder="I want to watch..."
-        className=" border border-white rounded-2xl justify-self-center w-[clamp(200px,50vw,30rem)] px-4 py-[.2rem] m-4 mx-auto bg-[#1f1f1f]"
-      />
-      <Pagination
-        page={data.page}
-        results={data.results}
-        total_pages={data.total_pages}
-        total_results={data.total_results}
-      />
-      <select
-        className="text-black mx-auto p-1 rounded-md bg-white w-30"
-        name="Movie Lists"
-        value={currentCategory}
-        onChange={handleChange}
-      >
-        <option value="now_playing">Now Playing</option>
-        <option value="popular">Popular</option>
-        <option value="top_rated">Top Rated</option>
-        <option value="upcoming">Upcoming</option>
-      </select>
+      <div className="justify-center border-x-6 border-double border-amber-500 w-full flex flex-wrap gap-4 p-4 pt-6">
+        <select
+          className="text-white bg-[#1f1f1f] border-white border py-2 px-1 rounded-lg w-30"
+          name="Movie Lists"
+          value={currentCategory}
+          onChange={handleChange}
+        >
+          <option value="now_playing">Now Playing</option>
+          <option value="popular">Popular</option>
+          <option value="top_rated">Top Rated</option>
+          <option value="upcoming">Upcoming</option>
+        </select>
+
+        <select
+          value={currentDecade}
+          className="text-white bg-[#1f1f1f] border-white border py-2 px-1 rounded-lg w-30"
+          onChange={(e) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('decade', e.target.value);
+            params.set('page', '1');
+
+            router.push(`/?${params.toString()}`);
+          }}
+        >
+          <option value="">All Years</option>
+          <option value="1900">1900s</option>
+          <option value="1910">1910s</option>
+          <option value="1920">1920s</option>
+          <option value="1930">1930s</option>
+          <option value="1940">1940s</option>
+          <option value="1950">1950s</option>
+          <option value="1960">1960s</option>
+          <option value="1970">1970s</option>
+          <option value="1980">1980s</option>
+          <option value="1990">1990s</option>
+          <option value="2000">2000s</option>
+          <option value="2010">2010s</option>
+          <option value="2020">2020s</option>
+        </select>
+
+        <select
+          value={currentSort}
+          className="text-white bg-[#1f1f1f] border-white border py-2 px-1 rounded-lg w-30"
+          onChange={(e) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('sort', e.target.value);
+            params.set('page', '1');
+
+            router.push(`/?${params.toString()}`);
+          }}
+        >
+          <option value="">Sort by</option>
+          <option value="title.asc">Title A → Z</option>
+          <option value="title.desc">Title Z → A</option>
+          <option value="vote_average.desc">Highest Rated</option>
+          <option value="primary_release_date.desc">Newest</option>
+        </select>
+      </div>
     </header>
   );
 }

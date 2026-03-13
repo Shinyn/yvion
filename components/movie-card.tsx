@@ -5,7 +5,7 @@ import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { Movie } from '@/types/tmdb';
 import { useRouter } from 'next/navigation';
 
-export function Card(movie: Movie) {
+export function MovieCard(movie: Movie) {
   const router = useRouter();
   const poster = movie?.poster_path;
 
@@ -20,7 +20,7 @@ export function Card(movie: Movie) {
           key={movie.id}
           onClick={goToMovie}
           className="group relative border-transparent rounded-2xl border hover:scale-101 transition-transform
-           hover:drop-shadow-yellow-200 hover:drop-shadow-2xl/100 duration-200 ease-in-out 
+           hover:drop-shadow-yellow-200 hover:drop-shadow-xl duration-200 ease-in-out 
            hover:cursor-pointer hover:border-yellow-200"
         >
           <div className="group-hover:opacity-100 opacity-0 transition-all duration-500 ease-in-out absolute w-full h-full z-10 rounded-2xl bg-linear-to-t from-black/80 to-transparent"></div>

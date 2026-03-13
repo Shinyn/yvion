@@ -23,7 +23,7 @@ export default function Pagination({ page, results, total_pages, total_results }
   }
 
   return (
-    <div>
+    <div className="border-x-6 border-double border-amber-500 w-full max-w-360 mx-auto pb-4">
       <div className="flex p-2 justify-center gap-2">
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
@@ -40,7 +40,7 @@ export default function Pagination({ page, results, total_pages, total_results }
           <ChevronLeft />
         </button>
         <select
-          className={`hover:cursor-pointer p-2 rounded-md text-black bg-white`}
+          className={`hover:cursor-pointer text-white bg-[#1f1f1f] border-white border py-2 px-1 rounded-lg`}
           name="page"
           value={currentPage}
           onChange={(e) => changePage(Number(e.target.value))}
