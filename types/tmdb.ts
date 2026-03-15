@@ -86,6 +86,13 @@ export interface CountryWatchProviders {
   buy?: WatchProvider[];
 }
 
+export interface Person {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for: MoviePreview[];
+}
+
 export interface VideoResponse {
   id: number;
   results: Video[];
@@ -115,12 +122,36 @@ export interface TVShow {
 }
 
 export interface HeaderProps {
-  data: TMDBResponse<Movie>;
+  data: {
+    page: number;
+    results: CardItem[];
+    total_pages: number;
+    total_results: number;
+  };
+}
+
+export interface PaginationProps {
+  page: number;
+  results: CardItem[];
+  total_pages: number;
+  total_results: number;
 }
 
 export interface HomeProps {
-  searchParams: {
+  searchParams: Promise<{
     category?: string;
     page?: string;
-  };
+    search?: string;
+    decade?: string;
+    sort?: string;
+  }>;
+}
+
+export interface CardItem {
+  id: number;
+  poster_path: string | null;
+  vote_average: number;
+  title?: string;
+  name?: string;
+  backdrop_path?: string | null;
 }

@@ -7,19 +7,18 @@ import Link from 'next/link';
 
 export default async function Movies({ params }: { params: { movieId: string } }) {
   const { movieId } = await params;
-  // console.log('PARAM:', movieId);
+
   const movie = await fetchTMDBItem<Movie & { videos: VideoResponse; 'watch/providers': WatchProviderResponse }>(
     `/movie/${movieId}?append_to_response=videos,watch/providers`,
   );
-  // console.log('This is the movie', movie);
+  const poster = movie?.poster_path;
   const officialTrailer = movie.videos.results.find(
     (video) => video.type === 'Trailer' && video.site === 'YouTube' && video.official,
   );
 
-  // const providers = movie['watch/providers'].results.SE;
-
   const hours = Math.floor(movie.runtime / 60);
   const minutes = movie.runtime % 60;
+  // const providers = movie['watch/providers'].results.SE;
 
   // const budget = Math.floor(movie.budget / 1000000);
   // const revenue = Math.floor(movie.revenue / 1000000);
@@ -33,15 +32,9 @@ export default async function Movies({ params }: { params: { movieId: string } }
   return (
     <div className="bg-center bg-cover bg-[url(@/public/movie-theater.png)] h-screen max-[1000px]:h-full">
       <section className="p-2 backdrop-blur-sm flex flex-col gap-4 items-center h-full justify-center align-middle relative">
-        <iframe
-          className="w-full max-w-300 min-h-110 h-full"
-          src={`https://www.youtube.com/embed/${officialTrailer?.key}`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
         <div className="flex justify-center max-[800px]:flex-col max-w-200 z-50 max-[800px]:place-items-center">
           <Image
-            src={`${TMDB_IMAGE_BASE}/${movie.poster_path}`}
+            src={poster ? `${TMDB_IMAGE_BASE}/${poster}` : '/movie-placeholder.svg'}
             alt={`${movie.title}`}
             height={800}
             width={400}
@@ -56,8 +49,8 @@ export default async function Movies({ params }: { params: { movieId: string } }
             max-[800px]:rounded-b-2xl max-[800px]:border-l font-bold 
             backdrop-blur-md text-shadow-indigo-200 text-xl p-4"
           >
+            {/* TITLE */}
             <span className="text-3xl">{movie.title}</span>
-
             <div className="flex">
               {/* RELEASE DATE */}
               <span className="place-content-end flex gap-1 w-fit rounded-4xl py-1 pr-4 ">
@@ -84,7 +77,7 @@ export default async function Movies({ params }: { params: { movieId: string } }
                 return (
                   <span
                     className="px-3 py-1 text-[#000000]
-                      rounded-4xl bg-linear-to-t from-[#10a372] via-[#64faff] to-[#3dffc2]
+                      rounded-4xl bg-linear-to-t from-[#16d1b8] via-[#59f9ff] to-[#1ae0e7]
                     "
                     key={genre.id}
                   >
@@ -115,6 +108,12 @@ export default async function Movies({ params }: { params: { movieId: string } }
             </Link>
           </section>
         </div>
+        <iframe
+          className="w-full max-w-300 min-h-110 h-full"
+          src={`https://www.youtube.com/embed/${officialTrailer?.key}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        ></iframe>
       </section>
     </div>
   );

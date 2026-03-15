@@ -1,13 +1,12 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Movie, TMDBResponse } from '@/types/tmdb';
+import { PaginationProps } from '@/types/tmdb';
 import { ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from 'lucide-react';
 
-export default function Pagination({ page, results, total_pages, total_results }: TMDBResponse<Movie>) {
+export default function Pagination({ page, results, total_pages, total_results }: PaginationProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  // console.log('This is the searchParams', searchParams);
   // console.log(
   //   `Pagination here, we got page ${page}, total pages ${total_pages}, results ${results.map((e) => e.title)} and total results ${total_results}`,
   // );
@@ -16,17 +15,15 @@ export default function Pagination({ page, results, total_pages, total_results }
   const pages = Array.from({ length: maxPages }, (_, i) => i + 1);
 
   const currentPage = Number(searchParams.get('page') ?? 1);
-  const category = searchParams.get('category') ?? 'now_playing';
 
   function changePage(newPage: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(newPage));
-    params.set('category', category);
     router.push(`/?${params.toString()}`, { scroll: false });
   }
 
   return (
-    <div>
+    <div className="border-x-6 border-double border-amber-500 w-full max-w-360 mx-auto pb-4">
       <div className="flex p-2 justify-center gap-2">
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
@@ -43,7 +40,7 @@ export default function Pagination({ page, results, total_pages, total_results }
           <ChevronLeft />
         </button>
         <select
-          className={`hover:cursor-pointer p-2 rounded-md text-black bg-white`}
+          className={`hover:cursor-pointer text-white bg-[#1f1f1f] border-white border py-2 px-1 rounded-lg`}
           name="page"
           value={currentPage}
           onChange={(e) => changePage(Number(e.target.value))}
@@ -57,14 +54,14 @@ export default function Pagination({ page, results, total_pages, total_results }
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
           onClick={() => changePage(currentPage + 1)}
-          disabled={currentPage === total_pages}
+          disabled={currentPage === maxPages}
         >
           <ChevronRight />
         </button>
         <button
           className={`hover:cursor-pointer hover:bg-white hover:text-black p-2 rounded-md`}
           onClick={() => changePage(total_pages > 500 ? 500 : total_pages)}
-          disabled={currentPage === total_pages}
+          disabled={currentPage === maxPages}
         >
           <ChevronsRight />
         </button>
