@@ -5,6 +5,7 @@ import { TMDB_IMAGE_BASE } from '@/lib/constants';
 import { HeaderProps } from '@/types/tmdb';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { Search } from 'lucide-react';
 
 export function Header({ data }: HeaderProps) {
   const router = useRouter();
@@ -67,15 +68,18 @@ export function Header({ data }: HeaderProps) {
 
   return (
     <header className="flex flex-col w-full max-w-360 mx-auto">
-      <div className="flex border-6 border-double border-amber-500 justify-center">
+      <div className="flex border-6 border-double border-amber-500 max-[800px]:justify-between">
         <Image className="p-2" src={'/logo.png'} alt="logo" width={80} height={80} />
-        <input
-          type="search"
-          value={query}
-          onChange={handleSearch}
-          placeholder="I want to watch..."
-          className=" border border-white rounded-2xl justify-self-center w-[clamp(180px,40vw,30rem)] px-4 py-[.2rem] m-4 mx-auto bg-[#1f1f1f]"
-        />
+        <div className="mx-auto max-[800px]:mx-0 relative flex items-center">
+          <Search className="absolute left-2 w-5 h-5 text-[#999999]" />
+          <input
+            type="search"
+            value={query}
+            onChange={handleSearch}
+            placeholder="I want to watch..."
+            className="pl-10  border border-white rounded-2xl w-[clamp(180px,40vw,30rem)] px-4 py-[.2rem] m-4 mx-auto bg-[#1f1f1f]"
+          />
+        </div>
       </div>
       <div className="relative border-6 border-t-0 border-double border-amber-500">
         <Image
