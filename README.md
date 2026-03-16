@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yvion
 
-## Getting Started
+Explore the vast library of cinema and discover new and old favorites.
 
-First, run the development server:
+## 👨‍💻 Author
 
-```bash
+I'm Mattias Alm and I created this movie browser to help myself (and others hopefully) find the next contender for movie night.
+
+## 🛠 Technologies
+
+- Next.js
+- Typescript
+- Tailwind
+- TMDB API (The Movie Database)
+
+## ⚙️ Installation
+
+```
+# Clone repo
+git clone https://github.com/Shinyn/yvion.git
+
+# Enter project folder
+cd yvion
+
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨Functionality
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Search
+- Filtering
+- Sorting
+- Pagination
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🍳 Where to find the project
 
-## Learn More
+[Local version] http://localhost:3000/
 
-To learn more about Next.js, take a look at the following resources:
+[Live version] https://yvion.vercel.app/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📷 Gallery
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![alt text](sshot.png)
+![alt text](sshot2.png)
+![alt text](sshot3.png)
