@@ -44,6 +44,6 @@ npm run dev
 
 ## 📷 Gallery
 
-![alt text](sshot.png)
-![alt text](sshot2.png)
-![alt text](sshot3.png)
+![alt text](public/sshot.png)
+![alt text](public/sshot2.png)
+![alt text](public/sshot3.png)
